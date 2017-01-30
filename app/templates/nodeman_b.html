@@ -1,0 +1,103 @@
+<!-- extend base layout -->
+{% extends "base.html" %}
+
+{% block content %}
+
+
+	<h3>Status Node</h3>
+
+	<table style="width=100%">
+		<tr>
+			<th>Node ID</th>
+			<th>Description</th>
+			<th>Location</th>
+			<th>Last Updated</th>
+			<th>Last Data ID</th>
+			<th>Action</th>
+		</tr>
+
+		{% for node in nodes%}
+		<tr>
+			<td>{{ node.id }}</td>
+			<td>{{ node.desc }}</td>
+			<td>{{ node.post }}</td>
+			<td>{{ node.last_time }}</td>
+			<td>{{ node.last_dataid }}</td>
+			<td>
+				<form action="" method="post" name="edit">
+					{{ form.hidden_tag() }}
+					<input type="hidden" name="edit" value="sss">
+					{{ form.edit }}
+				</form>
+			</td>
+			<td>
+				<form action="" method="post" name="delete">
+					{{ form.hidden_tag() }}
+					<input type="hidden" name="delete" value={{ node.id }}>
+					{{ form.delete }}
+				</form>
+			</td>
+		</tr>
+		{% endfor %}
+	</table>
+
+	{{ form.h_edit(value='ssss') }}
+
+  <form action="" method="post" name="login">
+      {{ form.hidden_tag() }}
+      <p>
+          Username:<br>
+          {{ form.username(size=80) }}<br>
+          {% for error in form.username.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}<br>
+      </p>
+      <p>
+          Password:<br>
+          {{ form.password(size=80) }}<br>
+          {% for error in form.password.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}<br>
+      </p>
+      <p><input type="hidden" name="data" value="sss"> </p>
+      <p>{{ form.remember_me }} Remember Me</p>
+      <p>{{ form.tes(value='a') }}</p>
+      
+  </form>
+
+
+{% endblock %}
+
+<form action="" method="post" name="man">
+{{ form.hidden_tag() }}
+<p>
+	{{ form.h_edit }}
+	{{ form.username }}
+	{{ form.edit }}
+</p>
+
+</form>
+<br>
+
+  <form action="" method="post" name="login">
+      {{ form.hidden_tag() }}
+      <p>
+          Username:<br>
+          {{ form.username(size=80) }}<br>
+          {% for error in form.username.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}<br>
+      </p>
+      <p>
+          Password:<br>
+          {{ form.password(size=80) }}<br>
+
+      </p>
+      <p><input type="hidden" name="data" value="sssbeta"> </p>
+      <p>{{ form.h_edit(value="ssssss") }}</p>
+      <p>{{ form.tes(value="sss") }}</p>
+      
+  </form>
+
+
+hahahah

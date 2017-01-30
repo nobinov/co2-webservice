@@ -1,0 +1,1 @@
+curl -i -H "Content-Type: application/json" -X POST -d '{"id":"11","timestamp":"101010","co2":"100","temp":"2020","hum":"3030","light":"4040"}' http://localhost:5000/api/v01/post

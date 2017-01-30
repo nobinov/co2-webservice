@@ -1,0 +1,43 @@
+<!-- extend base layout -->
+{% extends "base.html" %}
+
+{% block content %}
+
+<h3>Status Node</h3>
+
+	<table style="width=100%">
+		<tr>
+			<th>Node ID</th>
+			<th>Description</th>
+			<th>Location</th>
+			<th>Last Updated</th>
+			<th>Last Data ID</th>
+			<th>Action</th>
+		</tr>
+
+		{% for node in nodes%}
+		<tr>
+			<td>{{ node.id }}</td>
+			<td>{{ node.desc }}</td>
+			<td>{{ node.pos }}</td>
+			<td>{{ node.last_time }}</td>
+			<td>{{ node.last_dataid }}</td>
+			<td>
+				<form action="" method="post" name="edit">
+					{{ form.hidden_tag() }}
+					<input type="hidden" name="data" value="{{ node.id }}">
+					{{ form.edit }}
+					{{ form.delete}}
+				</form>
+			</td>
+		</tr>
+		{% endfor %}
+	</table>
+
+	<form action="" method="post" name="add">
+		{{ form.hidden_tag() }}
+		{{ form.add }}
+	</form>
+
+
+{% endblock %}

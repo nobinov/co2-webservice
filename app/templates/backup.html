@@ -1,0 +1,121 @@
+	<h3>Status Node</h3>
+
+	<table style="width=100%">
+		<tr>
+			<th>Node ID</th>
+			<th>Description</th>
+			<th>Location</th>
+			<th>Last Updated</th>
+			<th>Edit Data</th>
+		</tr>
+
+		{% for node in nodes%}
+		<tr>
+			<td>{{ node.id }}</td>
+			<td>{{ node.desc }}</td>
+			<td>{{ node.post }}</td>
+			<td>{{ node.last }}</td>
+			<td><a href="{{ url_for('edit', node=node) }}">Edit</a></td>
+		</tr>
+		{% endfor %}
+	</table>
+
+
+
+	<div class="container">
+		<h1>Please Login</h1>
+		<br>
+		<form action="" method="post">
+			<input type="text", placeholder="Username", name="username", value="{{ request.form.username }}">
+			<input type="password", placeholder="Password", name="password", value="{{ request.form.password }}">
+			<input class="btn btn-default" type="submit" value="Login">
+		</form>
+		{% if error %}
+			<p class="error"><strong>Error:</strong> {{ error }}</p>
+		{% endif %}
+	</div>
+
+	{% block content %}
+
+	<div class="container">
+		<h1>Please Login</h1>
+		<br>
+		<form action="" method="post" name="login">
+			{{ form.hidden_tag() }}
+			<p>
+				Username : 
+				{{ form.username }} <br>
+			</p>
+			<p>
+				Password : 
+				{{ form.password }} <br>
+			</p>
+			<p> Remember Me {{ form.remember_me }} </p>
+			<input class="btn btn-default" type="submit" value="Login">
+		</form>
+		{% if error %}
+			<p class="error"><strong>Error:</strong> {{ error }}</p>
+		{% endif %}
+	</div>
+
+{% endblock %}
+
+
+
+  <form action="" method="post" name="login">
+      {{ form.hidden_tag() }}
+      <p>
+          Username:<br>
+          {{ form.username(size=80) }}<br>
+          {% for error in form.username.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}<br>
+      </p>
+      <p>
+          Password:<br>
+          {{ form.password(size=80) }}<br>
+          {% for error in form.password.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}<br>
+      </p>
+      <p><input type="hidden" name="data" value="sss"> </p>
+      <p>{{ form.remember_me }} Remember Me</p>
+      <p>{{ form.tes(value='a') }}</p>
+      
+  </form>
+
+
+  	<table style="width=100%">
+		<tr>
+			<th>Node ID</th>
+			<th>Description</th>
+			<th>Location</th>
+			<th>Last Updated</th>
+			<th>Last Data ID</th>
+			<th>Action</th>
+		</tr>
+
+		{% for node in nodes%}
+		<tr>
+			<td>{{ node.id }}</td>
+			<td>{{ node.desc }}</td>
+			<td>{{ node.post }}</td>
+			<td>{{ node.last_time }}</td>
+			<td>{{ node.last_dataid }}</td>
+			<td>
+				<form action="" method="post" name="edit">
+					{{ form.hidden_tag() }}
+					<input type="hidden" name="edit" value="sss">
+					{{ form.edit }}
+				</form>
+			</td>
+			<td>
+				<form action="" method="post" name="delete">
+					{{ form.hidden_tag() }}
+					<input type="hidden" name="delete" value={{ node.id }}>
+					{{ form.delete }}
+				</form>
+			</td>
+		</tr>
+		{% endfor %}
+	</table>

@@ -1,0 +1,35 @@
+<!-- extend base layout -->
+{% extends "base.html" %}
+
+{% block content %}
+
+<h3>Add Node</h3>
+  <form action="" method="post" name="addnode">
+      {{ form.hidden_tag() }}
+      <p>
+          Node ID:<br>
+          {{ form.node_id(size=80) }}<br>
+          {% for error in form.node_id.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}<br>
+      </p>
+      <p>
+          Description:<br>
+          {{ form.node_desc(size=80) }}<br>
+          {% for error in form.node_desc.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}<br>
+      </p>
+      <p>
+          Node Position:<br>
+          {{ form.node_pos(size=80) }}<br>
+          {% for error in form.node_pos.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}<br>
+      </p>
+      <p><input type="submit" value="Add New Node"></p>
+  </form>
+
+	<h3> Hahahaha {{ pop }}</h3>
+
+{% endblock %}

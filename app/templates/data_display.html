@@ -1,0 +1,78 @@
+<!-- extend base layout -->
+{% extends "base.html" %}
+
+{% block content %}
+
+<script type="text/javascript">
+    $(document).ready(function(){
+      refreshTable();
+    });
+
+    function refreshTable(){
+        $('#tabledata').load('data_display.html #tabledata', function(){
+           setTimeout(refreshTable, 5000);
+        });
+    }
+</script>
+
+<div id="tabledata">
+
+	<h3>Node Status</h3>
+
+	<table style="width=100%">
+		<tr>
+			<th>Node ID</th>
+			<th>Description</th>
+			<th>Location</th>
+			<th>Last Updated</th>
+			<th>CO2</th>
+			<th>Temperature</th>
+			<th>Humidity</th>
+			<th>Light</th>
+		</tr>
+
+		
+		{% for nd in nd_list %}
+		<tr>
+			<td>{{ nd[0] }}</td>
+			<td>{{ nd[1] }}</td>
+			<td>{{ nd[2] }}</td>
+			<td>{{ nd[3] }}</td>
+			<td>{{ nd[4] }}</td>
+			<td>{{ nd[5] }}</td>
+			<td>{{ nd[6] }}</td>
+			<td>{{ nd[7] }}</td>
+		</tr>
+		{% endfor %}
+		
+
+	</table>
+
+	<h3>Data Recap</h3>
+
+	<table style="width=100%">
+		<tr>
+			<th>Node ID</th>
+			<th>Timestamp</th>
+			<th>CO2 (PPM)</th>
+			<th>Temperature (Celcius)</th>
+			<th>Humidity (%)</th>
+			<th>Light Intensity</th>
+		</tr>
+
+		{% for data in alldata %}
+		<tr>
+			<td>{{data.source}}</td>
+			<td>{{data.timestamp}}</td>
+			<td>{{data.data_co2}}</td>
+			<td>{{data.data_temp}}</td>
+			<td>{{data.data_hum}}</td>
+			<td>{{data.data_light}}</td>
+		</tr>
+		{% endfor %}
+
+	</table>
+
+</div>
+
+{% endblock %}
