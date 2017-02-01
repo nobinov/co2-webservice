@@ -1,1 +1,20 @@
-curl -i -H "Content-Type: application/json" -X POST -d '{"id":"11","timestamp":"101010","co2":"100","temp":"2020","hum":"3030","light":"4040"}' http://localhost:5000/api/v01/post
+curl -i -H "Content-Type: application/json" -X POST -d '{
+"id":"19",
+"timestamp":"yyyaaa",
+"co2":"100",
+"temp":"2020",
+"hum":"3030",
+"light":"4040"}' http://localhost:5000/api/v01/post/data/add
+
+curl -i -H "Content-Type: application/json" -X POST -d '{
+"id":"19",
+"desc":"node bau",
+"pos":"dimanaya"}' http://localhost:5000/api/v01/post/node/add
+
+curl -i -H "Content-Type: application/json" -X POST -d '{
+"id":"12",
+"desc":"node bau diedit",
+"pos":"dimanaya diedit"}' http://localhost:5000/api/v01/post/node/edit
+
+curl -i -H "Content-Type: application/json" -X POST -d '{
+"id":"19"}' http://localhost:5000/api/v01/post/node/delete

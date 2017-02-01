@@ -170,8 +170,8 @@ def node_edit(node_id):
 		return render_template('node_edit.html', node=node, form=form)
 	
 
-@app.route('/api/v01/post',methods=['POST'])
-def api_postdata():
+@app.route('/api/v01/post/data/add',methods=['POST'])
+def api_data_add():
 	if not request.json:
 		abort(400)
 	nid = request.json['id']
@@ -201,6 +201,65 @@ def api_postdata():
 		db.session.commit()
 
 		return jsonify({'updated':insert.id})
+
+
+@app.route('/api/v01/post/node/add',methods=['POST'])
+def api_node_add():
+	if not request.json:
+		abort(400)
+	n_id = request.json['id']	
+	n_desc = request.json['desc']
+	n_pos = request.json['pos']
+	n_lt = "None"
+	n_did = "None"
+
+
+	node = Node.query.get(n_id)
+	if node == None:
+		insert = Node(id=n_id,
+			desc=n_desc,
+			pos=n_pos,
+			last_time=n_lt,
+			last_dataid=n_did)
+		db.session.add(insert)
+		db.session.commit()
+		return jsonify({'new node':insert.id})
+		
+	else:
+		return jsonify({'new node':'already exist'})
+
+@app.route('/api/v01/post/node/edit',methods=['POST'])
+def api_node_edit():
+	if not request.json:
+		abort(400)
+	n_id = request.json['id']	
+	new_n_desc = request.json['desc']
+	new_n_pos = request.json['pos']
+
+	node = Node.query.get(n_id)
+	if node == None:
+		return jsonify({'edit node':'not found'})
+
+	else:
+		node.desc = new_n_desc
+		node.pos = new_n_pos
+		db.session.commit()
+		return jsonify({'edit node':node.id})
+
+@app.route('/api/v01/post/node/delete',methods=['POST'])
+def api_node_delete():
+	if not request.json:
+		abort(400)
+	n_id = request.json['id']	
+
+	node = Node.query.get(n_id)
+	if node == None:
+		return jsonify({'delete node':'not found'})
+
+	else:
+		db.session.delete(node)
+		db.session.commit()
+		return jsonify({'delete node':node.id})
 
 
 
