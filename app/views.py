@@ -170,6 +170,73 @@ def node_edit(node_id):
 		return render_template('node_edit.html', node=node, form=form)
 	
 
+
+@app.route('/api/v01/get/data',methods=['GET'])
+def api_data_getAll():
+	allData = Data.query.order_by(desc('id')).all()
+
+	allData_json = []
+
+	for d in allData:
+		data = {
+		'id' : d.id,
+		'timestamp' : d.timestamp,
+		'co2' : d.data_co2,
+		'temp' : d.data_temp,
+		'hum' : d.data_hum,
+		'light' : d.data_light,
+		'source' : d.node_id
+		}
+		allData_json.append(data)
+		#return jsonify(d)
+		#flash(d)
+	return jsonify({'data' : allData_json})
+
+@app.route('/api/v01/get/data/<int:node_id>',methods=['GET'])
+def api_data_get(node_id):
+	node_available = Node.query.get(node_id)
+	if node_available == None:
+		return jsonify({'data' : 'node ' + str(node_id) + ' doesnt exist'})
+	else:
+		allData = Data.query.filter(Data.node_id==node_id).order_by(desc('id')).all()
+
+		allData_json = []
+
+		for d in allData:
+			data = {
+			'id' : d.id,
+			'timestamp' : d.timestamp,
+			'co2' : d.data_co2,
+			'temp' : d.data_temp,
+			'hum' : d.data_hum,
+			'light' : d.data_light,
+			'source' : d.node_id
+			}
+			allData_json.append(data)
+			#return jsonify(d)
+			#flash(d)
+		return jsonify({'data' : allData_json})
+
+
+@app.route('/api/v01/get/node',methods=['GET'])
+def api_node_get():
+	allNode = Node.query.order_by(desc('id')).all()
+
+	allNode_json = []
+
+	for n in allNode:
+		node = {
+		'id' : n.id,
+		'desc' : n.desc,
+		'pos' : n.pos,
+		'last_time' : n.last_time,
+		'last_dataid' : n.last_dataid
+		}
+		allNode_json.append(node)
+		#return jsonify(d)
+		#flash(d)
+	return jsonify({'node' : allNode_json})
+
 @app.route('/api/v01/post/data/add',methods=['POST'])
 def api_data_add():
 	if not request.json:
