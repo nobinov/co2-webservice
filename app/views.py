@@ -19,7 +19,7 @@ def not_found_error(error):
 def internal_error(error):
     return render_template('500.html'), 500
 
-@app.errorhandler(400):
+@app.errorhandler(400)
 def bad_request(error):
 	return render_template('400.html'), 400
 
