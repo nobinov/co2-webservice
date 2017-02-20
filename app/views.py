@@ -1,14 +1,55 @@
-from flask import render_template, flash, redirect, session, url_for, request, g, jsonify, abort
+from flask import render_template, flash, redirect, session, url_for, request, g, jsonify, abort, make_response, current_app
 from flask.ext.login import login_user, logout_user, current_user, login_required
-from datetime import datetime
+from datetime import datetime, timedelta
 from app import app, db
 from .models import Node, Data
 from sqlalchemy import desc
-from functools import wraps
+from functools import wraps, update_wrapper
 from .forms import LoginForm, AddNodeForm, LoginForm3, NodeManForm, EditNodeForm, RESTSimForm
 import time
 
 app.secret_key = "adjhaldksjah"
+
+def crossdomain(origin=None, methods=None, headers=None,
+                max_age=21600, attach_to_all=True,
+                automatic_options=True):
+	if methods is not None:
+		methods = ', '.join(sorted(x.upper() for x in methods))
+	if headers is not None and not isinstance(headers, basestring):
+		headers = ', '.join(x.upper() for x in headers)
+	if not isinstance(origin, basestring):
+		origin = ', '.join(origin)
+	if isinstance(max_age, timedelta):
+		max_age = max_age.total_seconds()
+
+def get_methods():
+	if methods is not None:
+		return methods
+
+		options_resp = current_app.make_default_options_response()
+		return options_resp.headers['allow']
+
+def decorator(f):
+	def wrapped_function(*args, **kwargs):
+		if automatic_options and request.method == 'OPTIONS':
+			resp = current_app.make_default_options_response()
+		else:
+			resp = make_response(f(*args, **kwargs))
+		if not attach_to_all and request.method != 'OPTIONS':
+			return resp
+
+		h = resp.headers
+
+		h['Access-Control-Allow-Origin'] = origin
+		h['Access-Control-Allow-Methods'] = get_methods()
+		h['Access-Control-Max-Age'] = str(max_age)
+		if headers is not None:
+			h['Access-Control-Allow-Headers'] = headers
+		return resp
+
+	f.provide_automatic_options = False
+	return update_wrapper(wrapped_function, f)
+return decorator
 
 @app.errorhandler(404)
 def not_found_error(error):
@@ -176,6 +217,7 @@ def node_edit(node_id):
 
 
 @app.route('/api/v01/get/data',methods=['GET'])
+@crossdomain(origin='*')
 def api_data_getAll():
 	allData = Data.query.order_by(desc('id')).all()
 
@@ -197,6 +239,7 @@ def api_data_getAll():
 	return jsonify({'data' : allData_json})
 
 @app.route('/api/v01/get/data/<int:node_id>',methods=['GET'])
+@crossdomain(origin='*')
 def api_data_get(node_id):
 	node_available = Node.query.get(node_id)
 	if node_available == None:
@@ -223,6 +266,7 @@ def api_data_get(node_id):
 
 
 @app.route('/api/v01/get/node',methods=['GET'])
+@crossdomain(origin='*')
 def api_node_get():
 	allNode = Node.query.order_by(desc('id')).all()
 
