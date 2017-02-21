@@ -1,4 +1,4 @@
-from flask import render_template, flash, redirect, session, url_for, request, g, jsonify, abort, make_response, current_app
+from flask import render_template, flash, redirect, session, url_for, request, g, jsonify, abort, make_response, current_app, Response
 from flask.ext.login import login_user, logout_user, current_user, login_required
 from datetime import datetime, timedelta
 from app import app, db
@@ -264,6 +264,24 @@ def api_data_get(node_id):
 			#flash(d)
 		return jsonify({'data' : allData_json})
 
+@app.route('/api/v01/get/data/csv')
+def generate_large_csv():
+    def generate():
+    	allData = Data.query.order_by(desc('id')).all()
+
+    	allData_list = []
+        for sd in allData:
+        	rowd = "" + str(sd.id) + "," + sd.timestamp + "," + sd.data_co2 + "," + sd.data_temp + "," + sd.data_hum + "," + sd.data_light + "," + str(sd.node_id) + "," +"\n"
+        	allData_list.append(rowd)
+
+        allData_doc = ""
+        for row in allData_list:
+            allData_doc += row
+        yield allData_doc
+
+    filenameCO2 = "dataCO2-" + str('{:%Y-%m-%d-%H:%M:%S}'.format(datetime.utcnow())) + ".csv"
+    return Response(generate(), mimetype='text/csv', headers={"Content-disposition":"attachment; filename="+filenameCO2})	
+
 
 @app.route('/api/v01/get/node',methods=['GET'])
 @crossdomain(origin='*')
@@ -278,7 +296,8 @@ def api_node_get():
 		'desc' : n.desc,
 		'pos' : n.pos,
 		'last_time' : n.last_time,
-		'last_dataid' : n.last_dataid
+		'last_dataid' : n.last_dataid,
+		'status' : n.status
 		}
 		allNode_json.append(node)
 		#return jsonify(d)
@@ -376,7 +395,27 @@ def api_node_delete():
 		db.session.commit()
 		return jsonify({'delete node':node.id})
 
+@app.route('/api/v01/post/node/statchange',methods=['POST'])
+def api_node_statchange():
+	if not request.json:
+		abort(400)
+	n_id = request.json['id']
+	new_n_status = request.json['status']
+	if n_id == "9999":
+		allNode = Node.query.order_by(desc('id')).all()
+		for node in allNode:
+			node.status = new_n_status
+			db.session.commit()
+		return jsonify({'change node status': 'all node to ' + str(new_n_status)})
 
+	else:	
+		node = Node.query.get(n_id)
+		if node == None:
+			return jsonify({'change node status':'not found'})
+		else:
+			node.status = new_n_status
+			db.session.commit()
+			return jsonify({'change node status': str(node.id) + ' to ' + str(new_n_status)})
 
 @app.route('/edit', methods=['GET', 'POST'])
 def edit():

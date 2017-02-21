@@ -6,6 +6,7 @@ class Node(db.Model):
 	pos = db.Column(db.String(20), index=True)
 	last_time = db.Column(db.String(30), index=True)
 	last_dataid = db.Column(db.Integer, index=True)
+	status = db.Column(db.Integer, index=True, default=0)
 	data = db.relationship('Data', backref='source', lazy='dynamic')
 
 	def __repr__(self):
