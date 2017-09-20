@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dfxml xmloutputversion='1.0'>
+  <metadata 
+  xmlns='http://afflib.org/tcpflow/' 
+  xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' 
+  xmlns:dc='http://purl.org/dc/elements/1.1/'>
+    <dc:type>Feature Extraction</dc:type>
+  </metadata>
+  <creator version='1.0'>
+    <program>TCPFLOW</program>
+    <version>1.4.5</version>
+    <build_environment>
+      <compiler>5.2.1 (5.2.1 20151022)</compiler>
+      <CPPFLAGS>-pthread -I/usr/local/include -I/usr/local/include -D_FORTIFY_SOURCE=2 -DUTC_OFFSET=+0000 </CPPFLAGS>
+      <CFLAGS>-g   -pthread -g -O3 -fstack-protector-strong -Wformat -Werror=format-security -MD -Wpointer-arith -Wmissing-declarations -Wmissing-prototypes -Wshadow -Wwrite-strings -Wcast-align -Waggregate-return -Wbad-function-cast -Wcast-qual -Wundef -Wredundant-decls -Wdisabled-optimization -Wfloat-equal -Wmultichar -Wc++-compat -Wmissing-noreturn -Wall -Wstrict-prototypes -MD -D_FORTIFY_SOURCE=2 -Wpointer-arith -Wmissing-declarations -Wmissing-prototypes -Wshadow -Wwrite-strings -Wcast-align -Waggregate-return -Wbad-function-cast -Wcast-qual -Wundef -Wredundant-decls -Wdisabled-optimization -Wfloat-equal -Wmultichar -Wc++-compat -Wmissing-noreturn -Wall -Wstrict-prototypes</CFLAGS>
+      <CXXFLAGS>-g -pthread -g -O3 -fstack-protector-strong -Wformat -Werror=format-security -Wall -MD -D_FORTIFY_SOURCE=2 -Wpointer-arith -Wshadow -Wwrite-strings -Wcast-align -Wredundant-decls -Wdisabled-optimization -Wfloat-equal -Wmultichar -Wmissing-noreturn -Woverloaded-virtual -Wsign-promo -funit-at-a-time -Weffc++ -std=c++11 -Wall -MD -D_FORTIFY_SOURCE=2 -Wpointer-arith -Wshadow -Wwrite-strings -Wcast-align -Wredundant-decls -Wdisabled-optimization -Wfloat-equal -Wmultichar -Wmissing-noreturn -Woverloaded-virtual -Wsign-promo -funit-at-a-time -Wstrict-null-sentinel -Weffc++ </CXXFLAGS>
+      <LDFLAGS>-L/usr/local/lib -L/usr/local/lib -Wl,-Bsymbolic-functions -Wl,-z,relro</LDFLAGS>
+      <LIBS>-lpcap -lcairo -lfontconfig -lfreetype -lpixman-1 -lexpat  -lssl -lcrypto -lssl -lcrypto -ldl -lz </LIBS>
+      <compilation_date>2015-10-24T03:49:33</compilation_date>
+      <library name="boost" version="105800"/>
+    </build_environment>
+    <execution_environment>
+      <os_sysname>Linux</os_sysname>
+      <os_release>4.4.0-59-generic</os_release>
+      <os_version>#80-Ubuntu SMP Fri Jan 6 17:47:47 UTC 2017</os_version>
+      <host>ip-172-31-44-253</host>
+      <arch>x86_64</arch>
+      <command_line>tcpflow -p -c -i eth0 port 80</command_line>
+      <uid>0</uid>
+      <start_time>2017-02-03T10:39:18Z</start_time>
+    </execution_environment>
+  </creator>
+  <configuration>
+  </configuration>
+  <tdelta>0</tdelta>
+  <configuration>
+    <fileobject>
+      <filesize>0</filesize>
+      <tcpflow startime='2017-02-03T10:39:32.224098Z' endtime='2017-02-03T10:39:38.216147Z' src_ipn='115.178.215.137' dst_ipn='172.31.44.253' mac_daddr='02:60:67:63:73:db' mac_saddr='02:dd:d6:8e:1b:61' packets='3' srcport='4220' dstport='80' family='2' />
+    </fileobject>
+    <fileobject>
+      <filesize>0</filesize>
+      <tcpflow startime='2017-02-03T10:39:32.485341Z' endtime='2017-02-03T10:39:38.216166Z' src_ipn='115.178.215.137' dst_ipn='172.31.44.253' mac_daddr='02:60:67:63:73:db' mac_saddr='02:dd:d6:8e:1b:61' packets='3' srcport='47640' dstport='80' family='2' />
+    </fileobject>
+    <fileobject>
+      <filesize>0</filesize>
+      <tcpflow startime='2017-02-03T10:39:32.224113Z' endtime='2017-02-03T10:39:38.216243Z' src_ipn='172.31.44.253' dst_ipn='115.178.215.137' mac_daddr='02:dd:d6:8e:1b:61' mac_saddr='02:60:67:63:73:db' packets='2' srcport='80' dstport='4220' family='2' />
+    </fileobject>
+    <fileobject>
+      <filesize>0</filesize>
+      <tcpflow startime='2017-02-03T10:39:32.485354Z' endtime='2017-02-03T10:39:38.216342Z' src_ipn='172.31.44.253' dst_ipn='115.178.215.137' mac_daddr='02:dd:d6:8e:1b:61' mac_saddr='02:60:67:63:73:db' packets='2' srcport='80' dstport='47640' family='2' />
+    </fileobject>
