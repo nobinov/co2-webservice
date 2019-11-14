@@ -27,3 +27,9 @@ pip-log.txt
 venv
 *.pyc
 build
+
+# generated on build
+lib/
+
+# else
+nohup.out
